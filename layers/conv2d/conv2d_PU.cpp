@@ -1,6 +1,6 @@
 #include <stddef.h>
 #include <math.h>
-#include "conv2d.h"
+#include "header/conv2d.h"
 
 /** output_array is the Pointer to array of tensor values flattened in row major order and so on for other variables */
 /** output_ndim is the Rank of the tensor (number of dimensions). and so on for other variables */
