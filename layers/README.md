@@ -16,3 +16,4 @@ Conflicting first alphabets of pragmas will be resolved later as needed.
 3. Tiling - T
 4. Partitioning - Pa
 5. Flattening - F
+6. Loop Interchange - I
