@@ -44,7 +44,7 @@ void k2c_conv2d(float output_array[10816],
     const size_t in_channels = input_shape[2];
 
     // Partition the arrays to allow parallel access
-    #pragma HLS ARRAY_PARTITION variable=output_array complete
+    #pragma HLS ARRAY_PARTITION variable=output_array cyclic factor=16
     #pragma HLS ARRAY_PARTITION variable=input_array cyclic factor=16
     #pragma HLS ARRAY_PARTITION variable=kernel_array complete
     #pragma HLS ARRAY_PARTITION variable=bias_array complete
