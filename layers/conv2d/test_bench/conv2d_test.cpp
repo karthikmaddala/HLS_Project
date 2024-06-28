@@ -10,7 +10,7 @@ void initialize_data(float *data, size_t numel) {
 }
 
 
-void k2c_conv2d_test(float output_array[10],
+void k2c_conv2d_test(float output_array[10816],
                 size_t output_ndim,
                 size_t output_numel,
                 size_t output_shape[5],
@@ -120,8 +120,8 @@ int main() {
 
     int mismatch = 0;
 
-    // Print some of the output values for verification
-    for (size_t i = 0; i < 10; i++) { // Print first 10 values for example
+
+    for (size_t i = 0; i < 10816; i++) {
         if (output[i] != test_output[i]) {
             mismatch++;
         }

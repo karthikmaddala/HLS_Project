@@ -7,7 +7,7 @@
 /** output_numel Number of elements in the tensor and so on for other variables */
 /** output_shape is a Array of size 5 where each element is the size of the tensor in each dimension and so on for other variables */
 
-void k2c_conv2d(float output_array[10],
+void k2c_conv2d(float output_array[10816],
                 size_t output_ndim,
                 size_t output_numel,
                 size_t output_shape[5],

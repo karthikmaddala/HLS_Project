@@ -8,7 +8,7 @@ size_t min(size_t a, size_t b) {
     return (a <= b) ? a: b;
 }
 
-void k2c_conv2d(float output_array[10],
+void k2c_conv2d(float output_array[10816],
                 size_t output_ndim,
                 size_t output_numel,
                 size_t output_shape[5],
