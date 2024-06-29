@@ -2,7 +2,7 @@
 #include <math.h>
 #include "softmax.h"
 
-void k2c_softmax_func(float * x, const size_t size) {
+void k2c_softmax_func(float x[10000], const size_t size) {
 
     float xmax = x[0];
     float sum = 0;
