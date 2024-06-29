@@ -2,7 +2,7 @@
 #include <math.h>
 #include "softmax.h"
 
-void k2c_softmax_func(float * x, const size_t size) {
+void k2c_softmax_func(float x[10000], const size_t size) {
     #pragma HLS INTERFACE s_axilite port=return
     #pragma HLS INTERFACE s_axilite port=size
     #pragma HLS INTERFACE m_axi depth=10000 port=x
