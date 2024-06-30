@@ -7,6 +7,7 @@ void k2c_affine_matmul(float C[64*128], const float A[68*256], const float B[256
     // make sure output is empty
     // memset(C, 0, outrows*outcols*sizeof(C[0]));
     for (size_t foo =0; foo < outrows*outcols; ++foo) {
+#pragma HLS loop_tripcount min=8192 max=8192
         C[foo] = 0;
     }
 
