@@ -7613,39 +7613,36 @@ void k2c_maxpool2d(k2c_tensor* output, const k2c_tensor* input, const size_t * p
     const size_t in_rows = input->shape[0];
     const size_t in_cols = input->shape[1];
 
-    // i,j,l output indices
-    // i, k, m input indices
-L61: for (size_t i = 0; i < channels; ++i) {
-#pragma HLS pipeline
-#pragma HLS loop_tripcount min=64 max=64
-    L62: for (size_t l = 0; l < out_rows; ++l) {
-#pragma HLS pipeline
-#pragma HLS loop_tripcount min=7 max=7
-    L63: for (size_t j = 0; j < out_cols; ++j) {
-#pragma HLS pipeline
-#pragma HLS loop_tripcount min=13 max=13
-            size_t out_index = (l * out_cols + j) * channels + i;
-            size_t start_row = l * stride[0];
-            size_t start_col = j * stride[1];
-            output->array[out_index] = input->array[(start_row * in_cols + start_col) * channels + i];
+    const size_t total_out = channels * out_rows * out_cols;
+    const size_t pool_size_area = pool_size[0] * pool_size[1];
 
-    L64:     for (size_t p = 0; p < pool_size[0]; ++p) {
+L61: for (size_t idx = 0; idx < total_out; ++idx) {
 #pragma HLS pipeline
-#pragma HLS loop_tripcount min=2 max=2
-    L65:     for (size_t n = 0; n < pool_size[1]; ++n) {
-#pragma HLS pipeline
-#pragma HLS loop_tripcount min=2 max=2
-#pragma HLS unroll factor=2
-                    size_t in_index = ((start_row + p) * in_cols + (start_col + n)) * channels + i;
-                    if (output->array[out_index] < input->array[in_index]) {
-                        output->array[out_index] = input->array[in_index];
-                    }
-                }
+#pragma HLS loop_tripcount min=5824 max=5824
+        size_t c = idx % channels;
+        size_t j = (idx / channels) % out_cols;
+        size_t l = (idx / channels) / out_cols;
+
+        size_t out_index = (l * out_cols + j) * channels + c;
+        size_t start_row = l * stride[0];
+        size_t start_col = j * stride[1];
+        output->array[out_index] = input->array[(start_row * in_cols + start_col) * channels + c];
+
+    L64: for (size_t p = 0; p < pool_size_area; ++p) {
+#pragma HLS unroll
+#pragma HLS loop_tripcount min=4 max=4
+            size_t offset_row = p / pool_size[1];
+            size_t offset_col = p % pool_size[1];
+            size_t in_index = ((start_row + offset_row) * in_cols + (start_col + offset_col)) * channels + c;
+
+            if (output->array[out_index] < input->array[in_index]) {
+                output->array[out_index] = input->array[in_index];
             }
         }
     }
-    }
 }
+
+
 
 
 
